@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD8A819018FC863F0015E54C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8A818F18FC863F0015E54C /* Cocoa.framework */; };
+		AD8A819A18FC863F0015E54C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD8A819818FC863F0015E54C /* InfoPlist.strings */; };
+		AD8A819C18FC863F0015E54C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AD8A819B18FC863F0015E54C /* main.m */; };
+		AD8A81A018FC863F0015E54C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AD8A819E18FC863F0015E54C /* Credits.rtf */; };
+		AD8A81A318FC863F0015E54C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AD8A81A218FC863F0015E54C /* AppDelegate.m */; };
+		AD8A81A618FC863F0015E54C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD8A81A418FC863F0015E54C /* MainMenu.xib */; };
+		AD8A81A818FC863F0015E54C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD8A81A718FC863F0015E54C /* Images.xcassets */; };
+		AD8A81AF18FC86400015E54C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8A81AE18FC86400015E54C /* XCTest.framework */; };
+		AD8A81B018FC86400015E54C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8A818F18FC863F0015E54C /* Cocoa.framework */; };
+		AD8A81B818FC86400015E54C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD8A81B618FC86400015E54C /* InfoPlist.strings */; };
+		AD8A81BA18FC86400015E54C /* EEG2OSCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD8A81B918FC86400015E54C /* EEG2OSCTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AD8A81B118FC86400015E54C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD8A818418FC863F0015E54C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD8A818B18FC863F0015E54C;
+			remoteInfo = EEG2OSC;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AD8A818C18FC863F0015E54C /* EEG2OSC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EEG2OSC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD8A818F18FC863F0015E54C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		AD8A819218FC863F0015E54C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		AD8A819318FC863F0015E54C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		AD8A819418FC863F0015E54C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AD8A819718FC863F0015E54C /* EEG2OSC-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EEG2OSC-Info.plist"; sourceTree = "<group>"; };
+		AD8A819918FC863F0015E54C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AD8A819B18FC863F0015E54C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AD8A819D18FC863F0015E54C /* EEG2OSC-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EEG2OSC-Prefix.pch"; sourceTree = "<group>"; };
+		AD8A819F18FC863F0015E54C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		AD8A81A118FC863F0015E54C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		AD8A81A218FC863F0015E54C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AD8A81A518FC863F0015E54C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		AD8A81A718FC863F0015E54C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		AD8A81AD18FC86400015E54C /* EEG2OSCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EEG2OSCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD8A81AE18FC86400015E54C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		AD8A81B518FC86400015E54C /* EEG2OSCTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EEG2OSCTests-Info.plist"; sourceTree = "<group>"; };
+		AD8A81B718FC86400015E54C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AD8A81B918FC86400015E54C /* EEG2OSCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EEG2OSCTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD8A818918FC863F0015E54C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD8A819018FC863F0015E54C /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD8A81AA18FC86400015E54C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD8A81B018FC86400015E54C /* Cocoa.framework in Frameworks */,
+				AD8A81AF18FC86400015E54C /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD8A818318FC863F0015E54C = {
+			isa = PBXGroup;
+			children = (
+				AD8A819518FC863F0015E54C /* EEG2OSC */,
+				AD8A81B318FC86400015E54C /* EEG2OSCTests */,
+				AD8A818E18FC863F0015E54C /* Frameworks */,
+				AD8A818D18FC863F0015E54C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AD8A818D18FC863F0015E54C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD8A818C18FC863F0015E54C /* EEG2OSC.app */,
+				AD8A81AD18FC86400015E54C /* EEG2OSCTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD8A818E18FC863F0015E54C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AD8A818F18FC863F0015E54C /* Cocoa.framework */,
+				AD8A81AE18FC86400015E54C /* XCTest.framework */,
+				AD8A819118FC863F0015E54C /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AD8A819118FC863F0015E54C /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AD8A819218FC863F0015E54C /* AppKit.framework */,
+				AD8A819318FC863F0015E54C /* CoreData.framework */,
+				AD8A819418FC863F0015E54C /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		AD8A819518FC863F0015E54C /* EEG2OSC */ = {
+			isa = PBXGroup;
+			children = (
+				AD8A81A118FC863F0015E54C /* AppDelegate.h */,
+				AD8A81A218FC863F0015E54C /* AppDelegate.m */,
+				AD8A81A418FC863F0015E54C /* MainMenu.xib */,
+				AD8A81A718FC863F0015E54C /* Images.xcassets */,
+				AD8A819618FC863F0015E54C /* Supporting Files */,
+			);
+			path = EEG2OSC;
+			sourceTree = "<group>";
+		};
+		AD8A819618FC863F0015E54C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AD8A819718FC863F0015E54C /* EEG2OSC-Info.plist */,
+				AD8A819818FC863F0015E54C /* InfoPlist.strings */,
+				AD8A819B18FC863F0015E54C /* main.m */,
+				AD8A819D18FC863F0015E54C /* EEG2OSC-Prefix.pch */,
+				AD8A819E18FC863F0015E54C /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AD8A81B318FC86400015E54C /* EEG2OSCTests */ = {
+			isa = PBXGroup;
+			children = (
+				AD8A81B918FC86400015E54C /* EEG2OSCTests.m */,
+				AD8A81B418FC86400015E54C /* Supporting Files */,
+			);
+			path = EEG2OSCTests;
+			sourceTree = "<group>";
+		};
+		AD8A81B418FC86400015E54C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AD8A81B518FC86400015E54C /* EEG2OSCTests-Info.plist */,
+				AD8A81B618FC86400015E54C /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AD8A818B18FC863F0015E54C /* EEG2OSC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD8A81BD18FC86400015E54C /* Build configuration list for PBXNativeTarget "EEG2OSC" */;
+			buildPhases = (
+				AD8A818818FC863F0015E54C /* Sources */,
+				AD8A818918FC863F0015E54C /* Frameworks */,
+				AD8A818A18FC863F0015E54C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EEG2OSC;
+			productName = EEG2OSC;
+			productReference = AD8A818C18FC863F0015E54C /* EEG2OSC.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AD8A81AC18FC86400015E54C /* EEG2OSCTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD8A81C018FC86400015E54C /* Build configuration list for PBXNativeTarget "EEG2OSCTests" */;
+			buildPhases = (
+				AD8A81A918FC86400015E54C /* Sources */,
+				AD8A81AA18FC86400015E54C /* Frameworks */,
+				AD8A81AB18FC86400015E54C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD8A81B218FC86400015E54C /* PBXTargetDependency */,
+			);
+			name = EEG2OSCTests;
+			productName = EEG2OSCTests;
+			productReference = AD8A81AD18FC86400015E54C /* EEG2OSCTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD8A818418FC863F0015E54C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Szymon Kaliski";
+				TargetAttributes = {
+					AD8A81AC18FC86400015E54C = {
+						TestTargetID = AD8A818B18FC863F0015E54C;
+					};
+				};
+			};
+			buildConfigurationList = AD8A818718FC863F0015E54C /* Build configuration list for PBXProject "EEG2OSC" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AD8A818318FC863F0015E54C;
+			productRefGroup = AD8A818D18FC863F0015E54C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD8A818B18FC863F0015E54C /* EEG2OSC */,
+				AD8A81AC18FC86400015E54C /* EEG2OSCTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AD8A818A18FC863F0015E54C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD8A819A18FC863F0015E54C /* InfoPlist.strings in Resources */,
+				AD8A81A818FC863F0015E54C /* Images.xcassets in Resources */,
+				AD8A81A018FC863F0015E54C /* Credits.rtf in Resources */,
+				AD8A81A618FC863F0015E54C /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD8A81AB18FC86400015E54C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD8A81B818FC86400015E54C /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD8A818818FC863F0015E54C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD8A81A318FC863F0015E54C /* AppDelegate.m in Sources */,
+				AD8A819C18FC863F0015E54C /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD8A81A918FC86400015E54C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD8A81BA18FC86400015E54C /* EEG2OSCTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AD8A81B218FC86400015E54C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD8A818B18FC863F0015E54C /* EEG2OSC */;
+			targetProxy = AD8A81B118FC86400015E54C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AD8A819818FC863F0015E54C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AD8A819918FC863F0015E54C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		AD8A819E18FC863F0015E54C /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AD8A819F18FC863F0015E54C /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		AD8A81A418FC863F0015E54C /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AD8A81A518FC863F0015E54C /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		AD8A81B618FC86400015E54C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AD8A81B718FC86400015E54C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AD8A81BB18FC86400015E54C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		AD8A81BC18FC86400015E54C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		AD8A81BE18FC86400015E54C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EEG2OSC/EEG2OSC-Prefix.pch";
+				INFOPLIST_FILE = "EEG2OSC/EEG2OSC-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		AD8A81BF18FC86400015E54C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EEG2OSC/EEG2OSC-Prefix.pch";
+				INFOPLIST_FILE = "EEG2OSC/EEG2OSC-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		AD8A81C118FC86400015E54C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/EEG2OSC.app/Contents/MacOS/EEG2OSC";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EEG2OSC/EEG2OSC-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "EEG2OSCTests/EEG2OSCTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		AD8A81C218FC86400015E54C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/EEG2OSC.app/Contents/MacOS/EEG2OSC";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EEG2OSC/EEG2OSC-Prefix.pch";
+				INFOPLIST_FILE = "EEG2OSCTests/EEG2OSCTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD8A818718FC863F0015E54C /* Build configuration list for PBXProject "EEG2OSC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD8A81BB18FC86400015E54C /* Debug */,
+				AD8A81BC18FC86400015E54C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD8A81BD18FC86400015E54C /* Build configuration list for PBXNativeTarget "EEG2OSC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD8A81BE18FC86400015E54C /* Debug */,
+				AD8A81BF18FC86400015E54C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AD8A81C018FC86400015E54C /* Build configuration list for PBXNativeTarget "EEG2OSCTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD8A81C118FC86400015E54C /* Debug */,
+				AD8A81C218FC86400015E54C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AD8A818418FC863F0015E54C /* Project object */;
+}
