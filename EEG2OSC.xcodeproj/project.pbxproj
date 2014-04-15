@@ -11,13 +11,16 @@
 		AD8A819A18FC863F0015E54C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD8A819818FC863F0015E54C /* InfoPlist.strings */; };
 		AD8A819C18FC863F0015E54C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AD8A819B18FC863F0015E54C /* main.m */; };
 		AD8A81A018FC863F0015E54C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AD8A819E18FC863F0015E54C /* Credits.rtf */; };
-		AD8A81A318FC863F0015E54C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AD8A81A218FC863F0015E54C /* AppDelegate.m */; };
+		AD8A81A318FC863F0015E54C /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD8A81A218FC863F0015E54C /* AppDelegate.mm */; };
 		AD8A81A618FC863F0015E54C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD8A81A418FC863F0015E54C /* MainMenu.xib */; };
 		AD8A81A818FC863F0015E54C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD8A81A718FC863F0015E54C /* Images.xcassets */; };
 		AD8A81AF18FC86400015E54C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8A81AE18FC86400015E54C /* XCTest.framework */; };
 		AD8A81B018FC86400015E54C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8A818F18FC863F0015E54C /* Cocoa.framework */; };
 		AD8A81B818FC86400015E54C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD8A81B618FC86400015E54C /* InfoPlist.strings */; };
 		AD8A81BA18FC86400015E54C /* EEG2OSCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AD8A81B918FC86400015E54C /* EEG2OSCTests.m */; };
+		AD8A81CA18FC88A00015E54C /* libedk_ultils_mac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8A81C718FC88A00015E54C /* libedk_ultils_mac.dylib */; };
+		AD8A81CB18FC88A00015E54C /* libedk.1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8A81C818FC88A00015E54C /* libedk.1.0.0.dylib */; };
+		AD8A81CC18FC88A00015E54C /* libiomp5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8A81C918FC88A00015E54C /* libiomp5.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +45,7 @@
 		AD8A819D18FC863F0015E54C /* EEG2OSC-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EEG2OSC-Prefix.pch"; sourceTree = "<group>"; };
 		AD8A819F18FC863F0015E54C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		AD8A81A118FC863F0015E54C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		AD8A81A218FC863F0015E54C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AD8A81A218FC863F0015E54C /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		AD8A81A518FC863F0015E54C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		AD8A81A718FC863F0015E54C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AD8A81AD18FC86400015E54C /* EEG2OSCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EEG2OSCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +53,12 @@
 		AD8A81B518FC86400015E54C /* EEG2OSCTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EEG2OSCTests-Info.plist"; sourceTree = "<group>"; };
 		AD8A81B718FC86400015E54C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AD8A81B918FC86400015E54C /* EEG2OSCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EEG2OSCTests.m; sourceTree = "<group>"; };
+		AD8A81C418FC88890015E54C /* edk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edk.h; sourceTree = "<group>"; };
+		AD8A81C518FC88890015E54C /* edkErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edkErrorCode.h; sourceTree = "<group>"; };
+		AD8A81C618FC88890015E54C /* EmoStateDLL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoStateDLL.h; sourceTree = "<group>"; };
+		AD8A81C718FC88A00015E54C /* libedk_ultils_mac.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libedk_ultils_mac.dylib; path = "../../../../../../../usr/local/lib/EmotivSDKLib-PREMIUM/libedk_ultils_mac.dylib"; sourceTree = "<group>"; };
+		AD8A81C818FC88A00015E54C /* libedk.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libedk.1.0.0.dylib; path = "../../../../../../../usr/local/lib/EmotivSDKLib-PREMIUM/libedk.1.0.0.dylib"; sourceTree = "<group>"; };
+		AD8A81C918FC88A00015E54C /* libiomp5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiomp5.dylib; path = "../../../../../../../usr/local/lib/EmotivSDKLib-PREMIUM/libiomp5.dylib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +66,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD8A81CA18FC88A00015E54C /* libedk_ultils_mac.dylib in Frameworks */,
+				AD8A81CB18FC88A00015E54C /* libedk.1.0.0.dylib in Frameworks */,
+				AD8A81CC18FC88A00015E54C /* libiomp5.dylib in Frameworks */,
 				AD8A819018FC863F0015E54C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,6 +107,12 @@
 		AD8A818E18FC863F0015E54C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AD8A81C718FC88A00015E54C /* libedk_ultils_mac.dylib */,
+				AD8A81C818FC88A00015E54C /* libedk.1.0.0.dylib */,
+				AD8A81C918FC88A00015E54C /* libiomp5.dylib */,
+				AD8A819218FC863F0015E54C /* AppKit.framework */,
+				AD8A819318FC863F0015E54C /* CoreData.framework */,
+				AD8A819418FC863F0015E54C /* Foundation.framework */,
 				AD8A818F18FC863F0015E54C /* Cocoa.framework */,
 				AD8A81AE18FC86400015E54C /* XCTest.framework */,
 				AD8A819118FC863F0015E54C /* Other Frameworks */,
@@ -105,9 +123,6 @@
 		AD8A819118FC863F0015E54C /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AD8A819218FC863F0015E54C /* AppKit.framework */,
-				AD8A819318FC863F0015E54C /* CoreData.framework */,
-				AD8A819418FC863F0015E54C /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -115,8 +130,9 @@
 		AD8A819518FC863F0015E54C /* EEG2OSC */ = {
 			isa = PBXGroup;
 			children = (
+				AD8A81C318FC88650015E54C /* Emotiv */,
 				AD8A81A118FC863F0015E54C /* AppDelegate.h */,
-				AD8A81A218FC863F0015E54C /* AppDelegate.m */,
+				AD8A81A218FC863F0015E54C /* AppDelegate.mm */,
 				AD8A81A418FC863F0015E54C /* MainMenu.xib */,
 				AD8A81A718FC863F0015E54C /* Images.xcassets */,
 				AD8A819618FC863F0015E54C /* Supporting Files */,
@@ -152,6 +168,16 @@
 				AD8A81B618FC86400015E54C /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AD8A81C318FC88650015E54C /* Emotiv */ = {
+			isa = PBXGroup;
+			children = (
+				AD8A81C418FC88890015E54C /* edk.h */,
+				AD8A81C518FC88890015E54C /* edkErrorCode.h */,
+				AD8A81C618FC88890015E54C /* EmoStateDLL.h */,
+			);
+			name = Emotiv;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,7 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD8A81A318FC863F0015E54C /* AppDelegate.m in Sources */,
+				AD8A81A318FC863F0015E54C /* AppDelegate.mm in Sources */,
 				AD8A819C18FC863F0015E54C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,6 +415,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EEG2OSC/EEG2OSC-Prefix.pch";
 				INFOPLIST_FILE = "EEG2OSC/EEG2OSC-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/usr/local/lib/EmotivSDKLib-PREMIUM",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -402,6 +432,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EEG2OSC/EEG2OSC-Prefix.pch";
 				INFOPLIST_FILE = "EEG2OSC/EEG2OSC-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/usr/local/lib/EmotivSDKLib-PREMIUM",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -466,6 +500,7 @@
 				AD8A81BF18FC86400015E54C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AD8A81C018FC86400015E54C /* Build configuration list for PBXNativeTarget "EEG2OSCTests" */ = {
 			isa = XCConfigurationList;
@@ -474,6 +509,7 @@
 				AD8A81C218FC86400015E54C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
