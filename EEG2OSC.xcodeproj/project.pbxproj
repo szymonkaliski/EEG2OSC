@@ -164,16 +164,8 @@
 				AD8A819418FC863F0015E54C /* Foundation.framework */,
 				AD8A818F18FC863F0015E54C /* Cocoa.framework */,
 				AD8A81AE18FC86400015E54C /* XCTest.framework */,
-				AD8A819118FC863F0015E54C /* Other Frameworks */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		AD8A819118FC863F0015E54C /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		AD8A819518FC863F0015E54C /* EEG2OSC */ = {

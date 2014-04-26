@@ -10,7 +10,7 @@
 
 @implementation AppDelegate
 
-@synthesize portField, ipField;
+@synthesize portField, serverFied, ipField;
 
 EE_DataChannel_t targetChannelList[] = {
 	ED_COUNTER,
@@ -35,6 +35,9 @@ NSString* targetChannelNames[] = {
 	eState = EE_EmoStateCreate();
 	
 	oscClient = [[F53OSCClient alloc] init];
+	oscServer = [[F53OSCServer alloc] init];
+	[oscServer setPort:[serverFied intValue]];
+	[oscServer setDelegate:self];
 	
 	isConnected = (EE_EngineConnect() == EDK_OK);
 	isRunning = false;
@@ -49,16 +52,62 @@ NSString* targetChannelNames[] = {
 	}
 }
 
+- (void)takeMessage:(F53OSCMessage *)message {
+	if (isRunning) {
+		NSString *address = [message addressPattern];
+		NSArray *arguments = [message arguments];
+		NSLog(@"OSC in: %@ %@", address, [arguments componentsJoinedByString:@", "]);
+		
+		if ([address isEqualToString:@"/train/neutral"]) {
+			EE_CognitivSetTrainingAction(userID, COG_NEUTRAL);
+			EE_CognitivSetTrainingControl(userID, COG_START);
+		}
+		
+		if ([address isEqualToString:@"/train/push"]) {
+			EE_CognitivSetTrainingAction(userID, COG_PUSH);
+			EE_CognitivSetTrainingControl(userID, COG_START);
+		}
+		
+		if ([address isEqualToString:@"/train/accept"]) {
+			EE_CognitivSetTrainingControl(userID, COG_ACCEPT);
+		}
+		
+		if ([address isEqualToString:@"/train/reject"]) {
+			EE_CognitivSetTrainingControl(userID, COG_REJECT);
+		}
+	}
+}
+
 - (IBAction)runButtonClicked:(id)sender {
 	isRunning = [(NSButton *)sender state];
 	
 	ipAddress = [[NSString alloc] initWithString:[ipField stringValue]];
 	port = [portField intValue];
 	
-	NSLog(@"%@:%d", ipAddress, port);
+	[oscServer stopListening];
+	[oscServer setPort:[serverFied intValue]];
+	
+	if (isRunning) {
+		[oscServer startListening];
+		
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
+			[self setActivity:[[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"OSC"]];
+		}
+		
+		NSLog(@"Running: %@:%d (server: %d)", ipAddress, port, [oscServer port]);
+	}
 }
 
 - (void)runEEG {
+//	EE_CognitivSetActiveActions(userID, COG_PUSH);
+//	EE_CognitivSetTrainingAction(userID, COG_PUSH);
+//	EE_CognitivStartSamplingNeutral(userID);
+//	EE_CognitivStopSamplingNeutral(userID);
+	
+//	EE_CognitivSetTrainingAction(userID, COG_NEUTRAL);
+//	EE_CognitivSetTrainingControl(userID, COG_ACCEPT);
+//	EE_CognitivSetTrainingControl(userID, COG_REJECT);
+	
 	if (isRunning) {
 		int state = EE_EngineGetNextEvent(eEvent);
 		if (state == EDK_OK) {
@@ -86,13 +135,87 @@ NSString* targetChannelNames[] = {
 							NSString *address = [@"/EEG/" stringByAppendingString:fieldName];
 							NSNumber *value = [NSNumber numberWithFloat:(float)ddata[i]];
 
-//							NSLog(@"%@: %f", targetChannelNames[i], [value floatValue]);
 							F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:address arguments:@[value]];
 							
 							[oscClient sendPacket:message toHost:ipAddress onPort:port];
 						}
 					}
 					delete[] ddata;
+				}
+			}
+			
+			if (eventType == EE_EmoStateUpdated) {
+				EE_EmoEngineEventGetEmoState(eEvent, eState);
+				int actionType = ES_CognitivGetCurrentAction(eState);
+				
+				NSString *messageAction;
+				
+				switch (actionType) {
+					case COG_NEUTRAL:
+						messageAction = @"neutral";
+						break;
+						
+					case COG_PUSH:
+						messageAction = @"push";
+						break;
+						
+					default:
+						break;
+				}
+				
+				if (messageAction) {
+					F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/action" arguments:@[messageAction]];
+					[oscClient sendPacket:message toHost:ipAddress onPort:port];
+				}
+			}
+			
+			if (eventType == EE_CognitivEvent) {
+				EE_CognitivEvent_t cognitiveEvent = EE_CognitivEventGetType(eEvent);
+				NSLog(@"cognitiv event: %d", cognitiveEvent);
+				
+				NSString *messageText;
+				switch (cognitiveEvent) {
+					case EE_CognitivTrainingStarted:
+						messageText = @"training started";
+						break;
+					
+					case EE_CognitivTrainingSucceeded:
+						messageText = @"training succeeded";
+						break;
+					
+					case EE_CognitivTrainingFailed:
+						messageText = @"training failed";
+						break;
+					
+					case EE_CognitivTrainingCompleted:
+						messageText = @"training completed";
+						break;
+					
+					case EE_CognitivTrainingRejected:
+						messageText = @"training rejected";
+						break;
+						
+					case EE_CognitivAutoSamplingNeutralCompleted:
+						messageText = @"auto sampling completed";
+						break;
+			
+					case EE_CognitivSignatureUpdated:
+						messageText = @"signature updated";
+						break;
+						
+					case EE_CognitivNoEvent:
+						NSLog(@"no cognitiv event...");
+						break;
+						
+					default:
+						break;
+				}
+				
+				NSLog(@"message text: %@", messageText);
+				
+				if (messageText) {
+					F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/event" arguments:@[messageText]];
+					[oscClient sendPacket:message toHost:ipAddress onPort:port];
 				}
 			}
 		}
