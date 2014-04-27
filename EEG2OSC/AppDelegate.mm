@@ -157,6 +157,29 @@ NSString* targetChannelNames[] = {
 				F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/action" arguments:@[ messageAction, [NSNumber numberWithFloat:actionPower] ]];
 				[oscClient sendPacket:message toHost:ipAddress onPort:port];
 			}
+			
+			// Affectiv data
+			float engagementBoredom = ES_AffectivGetEngagementBoredomScore(eState);
+			float excitementLongTerm = ES_AffectivGetExcitementLongTermScore(eState);
+			float excitementShortTem = ES_AffectivGetExcitementShortTermScore(eState);
+			float frustration = ES_AffectivGetFrustrationScore(eState);
+			float meditation = ES_AffectivGetMeditationScore(eState);
+			
+			F53OSCMessage *message;
+			message = [F53OSCMessage messageWithAddressPattern:@"/affectiv/engagement" arguments:@[ [NSNumber numberWithFloat:engagementBoredom] ]];
+			[oscClient sendPacket:message toHost:ipAddress onPort:port];
+			
+			message = [F53OSCMessage messageWithAddressPattern:@"/affectiv/excitement-long" arguments:@[ [NSNumber numberWithFloat:excitementLongTerm] ]];
+			[oscClient sendPacket:message toHost:ipAddress onPort:port];
+			
+			message = [F53OSCMessage messageWithAddressPattern:@"/affectiv/excitement-short" arguments:@[ [NSNumber numberWithFloat:excitementShortTem] ]];
+			[oscClient sendPacket:message toHost:ipAddress onPort:port];
+			
+			message = [F53OSCMessage messageWithAddressPattern:@"/affectiv/frustration" arguments:@[ [NSNumber numberWithFloat:frustration] ]];
+			[oscClient sendPacket:message toHost:ipAddress onPort:port];
+			
+			message = [F53OSCMessage messageWithAddressPattern:@"/affectiv/meditation" arguments:@[ [NSNumber numberWithFloat:meditation] ]];
+			[oscClient sendPacket:message toHost:ipAddress onPort:port];
 		}
 		
 		// Cognitiv event
