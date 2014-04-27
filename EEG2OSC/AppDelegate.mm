@@ -41,7 +41,7 @@ NSString* targetChannelNames[] = {
 	
 	isConnected = (EE_EngineConnect() == EDK_OK);
 	isRunning = false;
-
+	
 	NSLog(@"isConnected: %d", isConnected);
 	
 	if (isConnected) {
@@ -59,11 +59,13 @@ NSString* targetChannelNames[] = {
 		NSLog(@"OSC in: %@ %@", address, [arguments componentsJoinedByString:@", "]);
 		
 		if ([address isEqualToString:@"/train/neutral"]) {
+			EE_CognitivSetActiveActions(userID, COG_NEUTRAL);
 			EE_CognitivSetTrainingAction(userID, COG_NEUTRAL);
 			EE_CognitivSetTrainingControl(userID, COG_START);
 		}
 		
 		if ([address isEqualToString:@"/train/push"]) {
+			EE_CognitivSetActiveActions(userID, COG_PUSH);
 			EE_CognitivSetTrainingAction(userID, COG_PUSH);
 			EE_CognitivSetTrainingControl(userID, COG_START);
 		}
@@ -89,7 +91,8 @@ NSString* targetChannelNames[] = {
 	
 	if (isRunning) {
 		[oscServer startListening];
-		
+
+		// don't nap if running in background
 		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
 			[self setActivity:[[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"OSC"]];
 		}
@@ -99,124 +102,85 @@ NSString* targetChannelNames[] = {
 }
 
 - (void)runEEG {
-//	EE_CognitivSetActiveActions(userID, COG_PUSH);
-//	EE_CognitivSetTrainingAction(userID, COG_PUSH);
-//	EE_CognitivStartSamplingNeutral(userID);
-//	EE_CognitivStopSamplingNeutral(userID);
-	
-//	EE_CognitivSetTrainingAction(userID, COG_NEUTRAL);
-//	EE_CognitivSetTrainingControl(userID, COG_ACCEPT);
-//	EE_CognitivSetTrainingControl(userID, COG_REJECT);
-	
-	if (isRunning) {
-		int state = EE_EngineGetNextEvent(eEvent);
-		if (state == EDK_OK) {
-			EE_Event_t eventType = EE_EmoEngineEventGetType(eEvent);
-			EE_EmoEngineEventGetUserId(eEvent, &userID);
+	if (isRunning && EE_EngineGetNextEvent(eEvent) == EDK_OK) {
+		EE_Event_t eventType = EE_EmoEngineEventGetType(eEvent);
+		EE_EmoEngineEventGetUserId(eEvent, &userID);
+		
+		// user add event
+		if (eventType == EE_UserAdded) {
+			EE_DataAcquisitionEnable(userID, TRUE);
+			NSLog(@"User added with ID: %d", userID);
+		}
+		
+		// emo state updated
+		if (eventType == EE_EmoStateUpdated) {
+			// EEG data
+			EE_DataUpdateHandle(userID, hData);
 			
-			if (eventType == EE_UserAdded) {
-				EE_DataAcquisitionEnable(userID, TRUE);
-				NSLog(@"User added with ID: %d", userID);
-			}
+			unsigned int nSamplesTaken = 0;
+			EE_DataGetNumberOfSample(hData, &nSamplesTaken);
 			
-			if (eventType == EE_EmoStateUpdated) {
-				EE_DataUpdateHandle(userID, hData);
-				
-				unsigned int nSamplesTaken = 0;
-				EE_DataGetNumberOfSample(hData, &nSamplesTaken);
-				
-				if (nSamplesTaken != 0) {
-					double* ddata = new double[nSamplesTaken];
-					for (int sampleIdx = 0; sampleIdx < (int)nSamplesTaken; ++sampleIdx) {
-						for (int i = 0; i < sizeof(targetChannelList) / sizeof(EE_DataChannel_t); i++) {
-							EE_DataGet(hData, targetChannelList[i], ddata, nSamplesTaken);
-							
-							NSString *fieldName = targetChannelNames[i];
-							NSString *address = [@"/EEG/" stringByAppendingString:fieldName];
-							NSNumber *value = [NSNumber numberWithFloat:(float)ddata[i]];
-
-							F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:address arguments:@[value]];
-							
-							[oscClient sendPacket:message toHost:ipAddress onPort:port];
-						}
+			if (nSamplesTaken != 0) {
+				double* ddata = new double[nSamplesTaken];
+				for (int sampleIdx = 0; sampleIdx < (int)nSamplesTaken; ++sampleIdx) {
+					for (int i = 0; i < sizeof(targetChannelList) / sizeof(EE_DataChannel_t); i++) {
+						EE_DataGet(hData, targetChannelList[i], ddata, nSamplesTaken);
+						
+						NSString *fieldName = targetChannelNames[i];
+						NSString *address = [@"/EEG/" stringByAppendingString:fieldName];
+						NSNumber *value = [NSNumber numberWithFloat:(float)ddata[i]];
+						
+						F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:address arguments:@[ value ]];
+						
+						[oscClient sendPacket:message toHost:ipAddress onPort:port];
 					}
-					delete[] ddata;
 				}
+				delete[] ddata;
 			}
 			
-			if (eventType == EE_EmoStateUpdated) {
-				EE_EmoEngineEventGetEmoState(eEvent, eState);
-				int actionType = ES_CognitivGetCurrentAction(eState);
-				
-				NSString *messageAction;
-				
-				switch (actionType) {
-					case COG_NEUTRAL:
-						messageAction = @"neutral";
-						break;
-						
-					case COG_PUSH:
-						messageAction = @"push";
-						break;
-						
-					default:
-						break;
-				}
-				
-				if (messageAction) {
-					F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/action" arguments:@[messageAction]];
-					[oscClient sendPacket:message toHost:ipAddress onPort:port];
-				}
+			// Cognitiv data
+			EE_EmoEngineEventGetEmoState(eEvent, eState);
+			
+			int actionType = ES_CognitivGetCurrentAction(eState);
+			float actionPower = ES_CognitivGetCurrentActionPower(eState);
+			NSString *messageAction;
+			
+			switch (actionType) {
+				case COG_NEUTRAL: messageAction = @"neutral"; break;
+				case COG_PUSH: messageAction = @"push"; break;
+				default: break;
 			}
 			
-			if (eventType == EE_CognitivEvent) {
-				EE_CognitivEvent_t cognitiveEvent = EE_CognitivEventGetType(eEvent);
-				NSLog(@"cognitiv event: %d", cognitiveEvent);
+			if (messageAction && actionPower > 0) {
+				NSLog(@"emo action text: %@ (%f)", messageAction, actionPower);
 				
-				NSString *messageText;
-				switch (cognitiveEvent) {
-					case EE_CognitivTrainingStarted:
-						messageText = @"training started";
-						break;
-					
-					case EE_CognitivTrainingSucceeded:
-						messageText = @"training succeeded";
-						break;
-					
-					case EE_CognitivTrainingFailed:
-						messageText = @"training failed";
-						break;
-					
-					case EE_CognitivTrainingCompleted:
-						messageText = @"training completed";
-						break;
-					
-					case EE_CognitivTrainingRejected:
-						messageText = @"training rejected";
-						break;
-						
-					case EE_CognitivAutoSamplingNeutralCompleted:
-						messageText = @"auto sampling completed";
-						break;
+				F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/action" arguments:@[ messageAction, [NSNumber numberWithFloat:actionPower] ]];
+				[oscClient sendPacket:message toHost:ipAddress onPort:port];
+			}
+		}
+		
+		// Cognitiv event
+		if (eventType == EE_CognitivEvent) {
+			EE_CognitivEvent_t cognitiveEvent = EE_CognitivEventGetType(eEvent);
+			NSString *messageText;
 			
-					case EE_CognitivSignatureUpdated:
-						messageText = @"signature updated";
-						break;
-						
-					case EE_CognitivNoEvent:
-						NSLog(@"no cognitiv event...");
-						break;
-						
-					default:
-						break;
-				}
-				
-				NSLog(@"message text: %@", messageText);
-				
-				if (messageText) {
-					F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/event" arguments:@[messageText]];
-					[oscClient sendPacket:message toHost:ipAddress onPort:port];
-				}
+			switch (cognitiveEvent) {
+				case EE_CognitivTrainingStarted: messageText = @"training started"; break;
+				case EE_CognitivTrainingSucceeded: messageText = @"training succeeded"; break;
+				case EE_CognitivTrainingFailed: messageText = @"training failed"; break;
+				case EE_CognitivTrainingCompleted: messageText = @"training completed"; break;
+				case EE_CognitivTrainingRejected: messageText = @"training rejected"; break;
+				case EE_CognitivAutoSamplingNeutralCompleted: messageText = @"auto sampling completed"; break;
+				case EE_CognitivSignatureUpdated: messageText = @"signature updated"; break;
+				case EE_CognitivNoEvent: NSLog(@"no cognitiv event..."); break;
+				default: break;
+			}
+			
+			NSLog(@"cognitiv event: %@", messageText);
+			
+			if (messageText) {
+				F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/event" arguments:@[messageText]];
+				[oscClient sendPacket:message toHost:ipAddress onPort:port];
 			}
 		}
 	}
