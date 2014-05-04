@@ -19,6 +19,7 @@
 	EmoStateHandle eState;
 	DataHandle hData;
 	unsigned int userID;
+	int posX, posY;
 	
 	F53OSCClient *oscClient;
 	F53OSCServer *oscServer;

@@ -30,6 +30,8 @@ NSString* targetChannelNames[] = {
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	float timerInterval = 0.25;
+	posX = 0;
+	posY = 0;
 	
 	eEvent = EE_EmoEngineEventCreate();
 	eState = EE_EmoStateCreate();
@@ -48,6 +50,8 @@ NSString* targetChannelNames[] = {
 		hData = EE_DataCreate();
 		EE_DataSetBufferSizeInSec(timerInterval);
 		
+		EE_CognitivSetActiveActions(userID, COG_NEUTRAL | COG_LIFT);
+		
 		[NSTimer scheduledTimerWithTimeInterval:timerInterval target:self selector:@selector(runEEG) userInfo:NULL repeats:YES];
 	}
 }
@@ -59,14 +63,12 @@ NSString* targetChannelNames[] = {
 		NSLog(@"OSC in: %@ %@", address, [arguments componentsJoinedByString:@", "]);
 		
 		if ([address isEqualToString:@"/train/neutral"]) {
-			EE_CognitivSetActiveActions(userID, COG_NEUTRAL);
 			EE_CognitivSetTrainingAction(userID, COG_NEUTRAL);
 			EE_CognitivSetTrainingControl(userID, COG_START);
 		}
 		
-		if ([address isEqualToString:@"/train/push"]) {
-			EE_CognitivSetActiveActions(userID, COG_PUSH);
-			EE_CognitivSetTrainingAction(userID, COG_PUSH);
+		if ([address isEqualToString:@"/train/lift"]) {
+			EE_CognitivSetTrainingAction(userID, COG_LIFT);
 			EE_CognitivSetTrainingControl(userID, COG_START);
 		}
 		
@@ -147,7 +149,7 @@ NSString* targetChannelNames[] = {
 			
 			switch (actionType) {
 				case COG_NEUTRAL: messageAction = @"neutral"; break;
-				case COG_PUSH: messageAction = @"push"; break;
+				case COG_LIFT: messageAction = @"lift"; break;
 				default: break;
 			}
 			
@@ -206,6 +208,23 @@ NSString* targetChannelNames[] = {
 				[oscClient sendPacket:message toHost:ipAddress onPort:port];
 			}
 		}
+		
+		// Signal quality
+		int numChannels = 14;
+		EE_EEG_ContactQuality_t contactQuality[numChannels];
+		ES_GetContactQualityFromAllChannels(eState, contactQuality, numChannels);
+		
+		for (int i = 0; i < numChannels; ++i) {
+			NSLog(@"contact quality for %d: %d", i, contactQuality[i]);
+		}
+		
+		// Gyro data
+		int gyroX, gyroY;
+		EE_HeadsetGetGyroDelta(userID, &gyroX, &gyroY);
+		posX += gyroX;
+		posY += gyroY;
+		F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:@"/gyro" arguments:@[ [NSNumber numberWithInt:posX], [NSNumber numberWithInt:posY] ]];
+		[oscClient sendPacket:message toHost:ipAddress onPort:port];
 	}
 }
 
