@@ -23,6 +23,7 @@
 	
 	F53OSCClient *oscClient;
 	F53OSCServer *oscServer;
+	F53OSCMessage *message;
 	
 	NSString *ipAddress;
 	int port;

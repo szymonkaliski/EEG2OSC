@@ -56,10 +56,10 @@ NSString* targetChannelNames[] = {
 	}
 }
 
-- (void)takeMessage:(F53OSCMessage *)message {
+- (void)takeMessage:(F53OSCMessage *)trainMessage {
 	if (isRunning) {
-		NSString *address = [message addressPattern];
-		NSArray *arguments = [message arguments];
+		NSString *address = [trainMessage addressPattern];
+		NSArray *arguments = [trainMessage arguments];
 		NSLog(@"OSC in: %@ %@", address, [arguments componentsJoinedByString:@", "]);
 
 		if ([address isEqualToString:@"/train/neutral"]) {
@@ -132,8 +132,7 @@ NSString* targetChannelNames[] = {
 						NSString *address = [@"/EEG/" stringByAppendingString:fieldName];
 						NSNumber *value = [NSNumber numberWithFloat:(float)ddata[i]];
 
-						F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:address arguments:@[ value ]];
-
+						message = [F53OSCMessage messageWithAddressPattern:address arguments:@[ value ]];
 						[oscClient sendPacket:message toHost:ipAddress onPort:port];
 					}
 				}
@@ -156,7 +155,7 @@ NSString* targetChannelNames[] = {
 			if (messageAction && actionPower > 0) {
 				NSLog(@"emo action text: %@ (%f)", messageAction, actionPower);
 
-				F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/action" arguments:@[ messageAction, [NSNumber numberWithFloat:actionPower] ]];
+				message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/action" arguments:@[ messageAction, [NSNumber numberWithFloat:actionPower] ]];
 				[oscClient sendPacket:message toHost:ipAddress onPort:port];
 			}
 
@@ -167,7 +166,6 @@ NSString* targetChannelNames[] = {
 			float frustration = ES_AffectivGetFrustrationScore(eState);
 			float meditation = ES_AffectivGetMeditationScore(eState);
 
-			F53OSCMessage *message;
 			message = [F53OSCMessage messageWithAddressPattern:@"/affectiv/engagement" arguments:@[ [NSNumber numberWithFloat:engagementBoredom] ]];
 			[oscClient sendPacket:message toHost:ipAddress onPort:port];
 
@@ -183,6 +181,11 @@ NSString* targetChannelNames[] = {
 			message = [F53OSCMessage messageWithAddressPattern:@"/affectiv/meditation" arguments:@[ [NSNumber numberWithFloat:meditation] ]];
 			[oscClient sendPacket:message toHost:ipAddress onPort:port];
 		}
+
+		// Expressiv data
+		int blinkStatus = ES_ExpressivIsBlink(eState);
+		message = [F53OSCMessage messageWithAddressPattern:@"/expressiv/blink" arguments:@[ [NSNumber numberWithInt:blinkStatus] ]];
+		[oscClient sendPacket:message toHost:ipAddress onPort:port];
 
 		// Cognitiv event
 		if (eventType == EE_CognitivEvent) {
@@ -204,7 +207,7 @@ NSString* targetChannelNames[] = {
 			NSLog(@"cognitiv event: %@", messageText);
 
 			if (messageText) {
-				F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/event" arguments:@[messageText]];
+				message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/event" arguments:@[messageText]];
 				[oscClient sendPacket:message toHost:ipAddress onPort:port];
 			}
 		}
@@ -220,7 +223,7 @@ NSString* targetChannelNames[] = {
 			[contactQualites addObject:[NSNumber numberWithInt:contactQuality[i]]];
 		}
 
-		F53OSCMessage *message = [F53OSCMessage messageWithAddressPattern:@"/quality" arguments:contactQualites];
+		message = [F53OSCMessage messageWithAddressPattern:@"/quality" arguments:contactQualites];
 		[oscClient sendPacket:message toHost:ipAddress onPort:port];
 
 		// Gyro data
