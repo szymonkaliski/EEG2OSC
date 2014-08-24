@@ -41,6 +41,7 @@ NSString* targetChannelNames[] = {
 	[oscServer setPort:[serverFied intValue]];
 	[oscServer setDelegate:self];
 
+//	isConnected = (EE_EngineRemoteConnect("127.0.0.1", 1726) == EDK_OK);
 	isConnected = (EE_EngineConnect() == EDK_OK);
 	isRunning = false;
 
