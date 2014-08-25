@@ -10,7 +10,7 @@
 
 @implementation AppDelegate
 
-@synthesize portField, serverFied, ipField;
+@synthesize portField, serverFied, ipField, inputType, infoLabel;
 
 EE_DataChannel_t targetChannelList[] = {
 	ED_COUNTER,
@@ -29,31 +29,70 @@ NSString* targetChannelNames[] = {
 };
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	float timerInterval = 0.25;
+	isRunning = false;
+	timerInterval = 1.0;
+
 	posX = 0;
 	posY = 0;
 
-	eEvent = EE_EmoEngineEventCreate();
-	eState = EE_EmoStateCreate();
-
 	oscClient = [[F53OSCClient alloc] init];
 	oscServer = [[F53OSCServer alloc] init];
-	[oscServer setPort:[serverFied intValue]];
 	[oscServer setDelegate:self];
 
-//	isConnected = (EE_EngineRemoteConnect("127.0.0.1", 1726) == EDK_OK);
-	isConnected = (EE_EngineConnect() == EDK_OK);
-	isRunning = false;
+	[NSTimer scheduledTimerWithTimeInterval:timerInterval target:self selector:@selector(runEEG) userInfo:NULL repeats:YES];
 
-	NSLog(@"isConnected: %d", isConnected);
+	// don't nap if running in background
+	if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
+		[self setActivity:[[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"OSC"]];
+	}
+}
 
-	if (isConnected) {
-		hData = EE_DataCreate();
-		EE_DataSetBufferSizeInSec(timerInterval);
+- (IBAction)runButtonClicked:(id)sender {
+	isRunning = [(NSButton *)sender state];
 
-		EE_CognitivSetActiveActions(userID, COG_NEUTRAL | COG_LIFT);
+	ipAddress = [[NSString alloc] initWithString:[ipField stringValue]];
+	port = [portField intValue];
 
-		[NSTimer scheduledTimerWithTimeInterval:timerInterval target:self selector:@selector(runEEG) userInfo:NULL repeats:YES];
+	[oscServer stopListening];
+	[oscServer setPort:[serverFied intValue]];
+
+	[ipField setEnabled:!isRunning];
+	[portField setEnabled:!isRunning];
+	[serverFied setEnabled:!isRunning];
+	[inputType setEnabled:!isRunning];
+
+	if (isRunning) {
+		NSString *connectTo;
+		for (NSCell *cell in [inputType cells]) {
+			if ([cell state] == 1) { connectTo = [cell title]; }
+		}
+
+		if ([connectTo isEqualToString:@"Headset"]) {
+			isConnected = (EE_EngineConnect() == EDK_OK);
+		}
+		else if ([connectTo isEqualToString:@"Composer"]) {
+			isConnected = (EE_EngineRemoteConnect("127.0.0.1", 1726) == EDK_OK);
+		}
+		else if ([connectTo isEqualToString:@"Control Panel"]) {
+			isConnected = (EE_EngineRemoteConnect("127.0.0.1", 3008) == EDK_OK);
+		}
+
+		if (isConnected) {
+			hData = EE_DataCreate();
+			eEvent = EE_EmoEngineEventCreate();
+			eState = EE_EmoStateCreate();
+
+			EE_DataSetBufferSizeInSec(timerInterval);
+
+			[oscServer startListening];
+
+			[infoLabel setTextColor:[NSColor blackColor]];
+			[infoLabel setStringValue:@"Connected"];
+		}
+		else {
+			[infoLabel setTextColor:[NSColor redColor]];
+			[infoLabel setStringValue:@"Can't connect..."];
+		}
 	}
 }
 
@@ -83,31 +122,11 @@ NSString* targetChannelNames[] = {
 	}
 }
 
-- (IBAction)runButtonClicked:(id)sender {
-	isRunning = [(NSButton *)sender state];
-
-	ipAddress = [[NSString alloc] initWithString:[ipField stringValue]];
-	port = [portField intValue];
-
-	[oscServer stopListening];
-	[oscServer setPort:[serverFied intValue]];
-
-	if (isRunning) {
-		[oscServer startListening];
-
-		// don't nap if running in background
-		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
-			[self setActivity:[[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"OSC"]];
-		}
-
-		NSLog(@"Running: %@:%d (server: %d)", ipAddress, port, [oscServer port]);
-	}
-}
-
 - (void)runEEG {
-	if (isRunning && EE_EngineGetNextEvent(eEvent) == EDK_OK) {
+	if (isRunning && isConnected && EE_EngineGetNextEvent(eEvent) == EDK_OK) {
 		EE_Event_t eventType = EE_EmoEngineEventGetType(eEvent);
 		EE_EmoEngineEventGetUserId(eEvent, &userID);
+		EE_CognitivSetActiveActions(userID, COG_NEUTRAL | COG_LIFT);
 
 		// user add event
 		if (eventType == EE_UserAdded) {

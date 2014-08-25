@@ -20,6 +20,7 @@
 	DataHandle hData;
 	unsigned int userID;
 	int posX, posY;
+	float timerInterval;
 	
 	F53OSCClient *oscClient;
 	F53OSCServer *oscServer;
@@ -38,6 +39,8 @@
 @property (weak) IBOutlet NSTextField *ipField;
 @property (weak) IBOutlet NSTextField *portField;
 @property (weak) IBOutlet NSTextField *serverFied;
+@property (weak) IBOutlet NSMatrix *inputType;
+@property (weak) IBOutlet NSTextField *infoLabel;
 
 - (IBAction)runButtonClicked:(id)sender;
 
