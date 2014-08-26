@@ -204,7 +204,20 @@ NSString* targetChannelNames[] = {
 
 		// Expressiv data
 		int blinkStatus = ES_ExpressivIsBlink(eState);
+		int leftWink = ES_ExpressivIsLeftWink(eState);
+		int rightWink = ES_ExpressivIsRightWink(eState);
+		int lookingLeft = ES_ExpressivIsLookingLeft(eState);
+		int lookingRight = ES_ExpressivIsLookingRight(eState);
+
 		message = [F53OSCMessage messageWithAddressPattern:@"/expressiv/blink" arguments:@[ [NSNumber numberWithInt:blinkStatus] ]];
+		[oscClient sendPacket:message toHost:ipAddress onPort:port];
+		message = [F53OSCMessage messageWithAddressPattern:@"/expressiv/wink-left" arguments:@[ [NSNumber numberWithInt:leftWink] ]];
+		[oscClient sendPacket:message toHost:ipAddress onPort:port];
+		message = [F53OSCMessage messageWithAddressPattern:@"/expressiv/wink-right" arguments:@[ [NSNumber numberWithInt:rightWink] ]];
+		[oscClient sendPacket:message toHost:ipAddress onPort:port];
+		message = [F53OSCMessage messageWithAddressPattern:@"/expressiv/look-left" arguments:@[ [NSNumber numberWithInt:lookingLeft] ]];
+		[oscClient sendPacket:message toHost:ipAddress onPort:port];
+		message = [F53OSCMessage messageWithAddressPattern:@"/expressiv/look-right" arguments:@[ [NSNumber numberWithInt:lookingRight] ]];
 		[oscClient sendPacket:message toHost:ipAddress onPort:port];
 
 		// Cognitiv event
