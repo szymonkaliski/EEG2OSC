@@ -30,7 +30,7 @@ NSString* targetChannelNames[] = {
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	isRunning = false;
-	timerInterval = 1.0;
+	timerInterval = 0.0005;
 
 	posX = 0;
 	posY = 0;
@@ -172,7 +172,7 @@ NSString* targetChannelNames[] = {
 				default: break;
 			}
 
-			if (messageAction && actionPower > 0) {
+			if (messageAction && actionPower >= 0) {
 				NSLog(@"emo action text: %@ (%f)", messageAction, actionPower);
 
 				message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/action" arguments:@[ messageAction, [NSNumber numberWithFloat:actionPower] ]];
