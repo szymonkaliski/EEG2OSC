@@ -99,8 +99,6 @@ NSString* targetChannelNames[] = {
 - (void)takeMessage:(F53OSCMessage *)trainMessage {
 	if (isRunning) {
 		NSString *address = [trainMessage addressPattern];
-		NSArray *arguments = [trainMessage arguments];
-		NSLog(@"OSC in: %@ %@", address, [arguments componentsJoinedByString:@", "]);
 
 		if ([address isEqualToString:@"/train/neutral"]) {
 			EE_CognitivSetTrainingAction(userID, COG_NEUTRAL);
@@ -109,6 +107,11 @@ NSString* targetChannelNames[] = {
 
 		if ([address isEqualToString:@"/train/lift"]) {
 			EE_CognitivSetTrainingAction(userID, COG_LIFT);
+			EE_CognitivSetTrainingControl(userID, COG_START);
+		}
+
+		if ([address isEqualToString:@"/train/push"]) {
+			EE_CognitivSetTrainingAction(userID, COG_PUSH);
 			EE_CognitivSetTrainingControl(userID, COG_START);
 		}
 
@@ -126,12 +129,11 @@ NSString* targetChannelNames[] = {
 	if (isRunning && isConnected && EE_EngineGetNextEvent(eEvent) == EDK_OK) {
 		EE_Event_t eventType = EE_EmoEngineEventGetType(eEvent);
 		EE_EmoEngineEventGetUserId(eEvent, &userID);
-		EE_CognitivSetActiveActions(userID, COG_NEUTRAL | COG_LIFT);
+		EE_CognitivSetActiveActions(userID, COG_NEUTRAL | COG_LIFT | COG_PUSH);
 
 		// user add event
 		if (eventType == EE_UserAdded) {
 			EE_DataAcquisitionEnable(userID, TRUE);
-			NSLog(@"User added with ID: %d", userID);
 		}
 
 		// emo state updated
@@ -169,12 +171,11 @@ NSString* targetChannelNames[] = {
 			switch (actionType) {
 				case COG_NEUTRAL: messageAction = @"neutral"; break;
 				case COG_LIFT: messageAction = @"lift"; break;
+				case COG_PUSH: messageAction = @"push"; break;
 				default: break;
 			}
 
 			if (messageAction && actionPower >= 0) {
-				NSLog(@"emo action text: %@ (%f)", messageAction, actionPower);
-
 				message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/action" arguments:@[ messageAction, [NSNumber numberWithFloat:actionPower] ]];
 				[oscClient sendPacket:message toHost:ipAddress onPort:port];
 			}
@@ -237,8 +238,6 @@ NSString* targetChannelNames[] = {
 				default: break;
 			}
 
-			NSLog(@"cognitiv event: %@", messageText);
-
 			if (messageText) {
 				message = [F53OSCMessage messageWithAddressPattern:@"/cognitiv/event" arguments:@[messageText]];
 				[oscClient sendPacket:message toHost:ipAddress onPort:port];
@@ -252,7 +251,6 @@ NSString* targetChannelNames[] = {
 
 		NSMutableArray *contactQualites = [[NSMutableArray alloc] init];
 		for (int i = 0; i < numChannels; ++i) {
-//			NSLog(@"contact quality for %d: %d", i, contactQuality[i]);
 			[contactQualites addObject:[NSNumber numberWithInt:contactQuality[i]]];
 		}
 
