@@ -30,7 +30,7 @@ NSString* targetChannelNames[] = {
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	isRunning = false;
-	timerInterval = 0.0005;
+	timerInterval = 0.01;
 
 	posX = 0;
 	posY = 0;
@@ -78,9 +78,9 @@ NSString* targetChannelNames[] = {
 		}
 
 		if (isConnected) {
-			hData = EE_DataCreate();
 			eEvent = EE_EmoEngineEventCreate();
 			eState = EE_EmoStateCreate();
+			hData = EE_DataCreate();
 
 			EE_DataSetBufferSizeInSec(timerInterval);
 
@@ -128,6 +128,7 @@ NSString* targetChannelNames[] = {
 - (void)runEEG {
 	if (isRunning && isConnected && EE_EngineGetNextEvent(eEvent) == EDK_OK) {
 		EE_Event_t eventType = EE_EmoEngineEventGetType(eEvent);
+
 		EE_EmoEngineEventGetUserId(eEvent, &userID);
 		EE_CognitivSetActiveActions(userID, COG_NEUTRAL | COG_LIFT | COG_PUSH);
 
