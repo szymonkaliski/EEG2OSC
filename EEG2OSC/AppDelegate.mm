@@ -122,6 +122,13 @@ NSString* targetChannelNames[] = {
 		if ([address isEqualToString:@"/train/reject"]) {
 			EE_CognitivSetTrainingControl(userID, COG_REJECT);
 		}
+
+		if ([address isEqualToString:@"/cognitiv/sensitivity"]) {
+			int sensitivity = [(NSNumber *)[[trainMessage arguments] firstObject] intValue];
+			sensitivity = MIN(7, MAX(sensitivity, 0));
+
+			EE_CognitivSetActivationLevel(userID, sensitivity);
+		}
 	}
 }
 
