@@ -2,7 +2,7 @@
 
 EEG2OSC is simple application written in Objective-C for two-way communication with [Emotiv EPOC](http://emotiv.com/epoc/) using familiar OSC protocol.
 
-![](assets/screenshot.png)
+<p align="center"><img src="/szymonkaliski/EEG2OSC/raw/master/assets/screenshot.png" alt="EEG2OSC screenshot" style="max-width:100%;"></p>
 
 EEG2OSC was prepared for [Sensorium](http://sensorium.com.pl) - audio installation by [Rafał Zapała](http://www.zapala.com.pl), more info: [http://treesmovethemost.com/2014-10-10-sensorium](http://treesmovethemost.com/2014-10-10-sensorium).
 
