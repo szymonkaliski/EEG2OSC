@@ -6,7 +6,7 @@ EEG2OSC is simple application written in Objective-C for two-way communication w
 
 EEG2OSC was prepared for [Sensorium](http://sensorium.com.pl) - audio installation by [Rafał Zapała](http://www.zapala.com.pl), more info: [http://treesmovethemost.com/2014-10-10-sensorium](http://treesmovethemost.com/2014-10-10-sensorium).
 
-# Outgoing OSC messages
+## Outgoing OSC messages
 
 `/EEG/ED_AF3`, `/EEG/ED_F7`, `/EEG/ED_F3`, `/EEG/ED_FC5`, `/EEG/ED_T7`, `/EEG/ED_P7`, `/EEG/ED_O1`, `/EEG/ED_O2`, `/EEG/ED_P8`, `/EEG/ED_T8`, `/EEG/ED_FC6`, `/EEG/ED_F4`, `/EEG/ED_F8`, `/EEG/ED_AF4` - raw data from EEG (requires research edition of Emotiv SDK)
 
@@ -22,7 +22,7 @@ EEG2OSC was prepared for [Sensorium](http://sensorium.com.pl) - audio installati
 
 `/cognitiv/event` - training events: "started", "succeeded", "failed", "completed", "rejected"
 
-# Incoming OSC messages
+## Incoming OSC messages
 
 `/train/neutral` - train neutral state
 
@@ -34,7 +34,7 @@ EEG2OSC was prepared for [Sensorium](http://sensorium.com.pl) - audio installati
 
 `/train/reject` - reject training
 
-# Working with training actions
+## Working with training actions
 
 Training is the trickiest part, example workflow for training "neutral" action:
 
